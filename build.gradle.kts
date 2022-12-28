@@ -4,7 +4,7 @@ plugins {
     `maven-publish`
 }
 
-group = "me.shun"
+group = "com.github.shwaka.kotex"
 version = "0.1"
 
 repositories {
