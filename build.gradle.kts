@@ -54,6 +54,11 @@ kotlin {
                 implementation("io.kotest:kotest-assertions-core:$version")
                 implementation("io.kotest:kotest-property:$version")
                 implementation("io.kotest:kotest-assertions-compiler:$version")
+                // Explicit dependency on kotlin-reflect and kotlin-script-runtime is necessary
+                // to avoid "Runtime JAR files in the classpath should have the same version"
+                // in kotest-assertions-compiler.
+                implementation("org.jetbrains.kotlin:kotlin-reflect:1.5.32")
+                implementation("org.jetbrains.kotlin:kotlin-script-runtime:1.5.32")
             }
         }
         val jsMain by getting
