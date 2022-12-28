@@ -1,10 +1,12 @@
 package com.github.shwaka.kotex
 
-import com.github.shwaka.kohomology.compileTag
+import io.kotest.core.NamedTag
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.compilation.shouldCompile
 import io.kotest.matchers.compilation.shouldNotCompile
 import io.kotest.matchers.shouldBe
+
+val compileTag = NamedTag("Compile")
 
 class TexArticleTest : FreeSpec({
     tags(scriptTag)
