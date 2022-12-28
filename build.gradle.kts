@@ -1,5 +1,7 @@
 plugins {
-    kotlin("multiplatform") version "1.6.10"
+    kotlin("multiplatform") version "1.5.32"
+    id("com.adarshr.test-logger") version "3.0.1-SNAPSHOT"
+    `maven-publish`
 }
 
 group = "me.shun"
@@ -10,6 +12,7 @@ repositories {
 }
 
 kotlin {
+    explicitApiWarning()
     jvm {
         compilations.all {
             kotlinOptions.jvmTarget = "1.8"
@@ -42,10 +45,61 @@ kotlin {
             }
         }
         val jvmMain by getting
-        val jvmTest by getting
+        val jvmTest by getting {
+            dependencies {
+                implementation(kotlin("test-junit"))
+                // kotest
+                val version = "4.3.2"
+                implementation("io.kotest:kotest-runner-junit5:$version")
+                implementation("io.kotest:kotest-assertions-core:$version")
+                implementation("io.kotest:kotest-property:$version")
+                implementation("io.kotest:kotest-assertions-compiler:$version")
+            }
+        }
         val jsMain by getting
         val jsTest by getting
         val nativeMain by getting
         val nativeTest by getting
     }
 }
+
+tasks.withType<Test> {
+    useJUnitPlatform()
+    testLogging {
+        events("skipped", "passed", "failed") // "started" は消した
+    }
+    System.getProperty("kotest.tags")?.let {
+        // null を set するとなんかエラーが起きるので、 ?.let を使った
+        systemProperties["kotest.tags"] = it
+    }
+    System.getProperty("kococo.debug")?.let {
+        systemProperties["kococo.debug"] = it
+    }
+}
+
+testlogger {
+    theme = com.adarshr.gradle.testlogger.theme.ThemeType.MOCHA
+    showCauses = true
+    showStandardStreams = true
+    showFullStackTraces = true
+    if (System.getProperty("noFilter") == null) {
+        filterFullStackTraces = "io\\.kotest.*"
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            url = uri("../../maven/repository")
+            name = "MyMaven"
+        }
+        // maven {
+        //     url = uri("../repository")
+        //     name = "Temporary"
+        // }
+    }
+}
+
+// aliases
+tasks.register("kc") { dependsOn("ktlintCheck") }
+tasks.register("kf") { dependsOn("ktlintFormat") }
