@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "me.shun"
-version = "1.0-SNAPSHOT"
+version = "0.1"
 
 repositories {
     mavenCentral()
@@ -95,7 +95,7 @@ testlogger {
 publishing {
     repositories {
         maven {
-            url = uri("../../maven/repository")
+            url = uri("../maven/repository")
             name = "MyMaven"
         }
         // maven {
