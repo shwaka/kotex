@@ -42,7 +42,7 @@ class TexArticleCompileTest : FreeSpec({
 
     "correct code should compile" {
         val code = """
-            import com.github.shwaka.kohomology.tex.TexArticle
+            import com.github.shwaka.kotex.TexArticle
             val texArticle = TexArticle {
                 preamble {
                     documentclass("article")
@@ -57,7 +57,7 @@ class TexArticleCompileTest : FreeSpec({
 
     "preamble in preamble should not compile" {
         val code = """
-            import com.github.shwaka.kohomology.tex.TexArticle
+            import com.github.shwaka.kotex.TexArticle
             val texArticle = TexArticle {
                 preamble {
                     documentclass("article")
@@ -73,7 +73,7 @@ class TexArticleCompileTest : FreeSpec({
 
     "preamble in document should not compile" {
         val code = """
-            import com.github.shwaka.kohomology.tex.TexArticle
+            import com.github.shwaka.kotex.TexArticle
             val texArticle = TexArticle {
                 preamble {
                     documentclass("article")
@@ -89,7 +89,7 @@ class TexArticleCompileTest : FreeSpec({
 
     "document in preamble should not compile" {
         val code = """
-            import com.github.shwaka.kohomology.tex.TexArticle
+            import com.github.shwaka.kotex.TexArticle
             val texArticle = TexArticle {
                 preamble {
                     documentclass("article")
@@ -105,7 +105,7 @@ class TexArticleCompileTest : FreeSpec({
 
     "document in document should not compile" {
         val code = """
-            import com.github.shwaka.kohomology.tex.TexArticle
+            import com.github.shwaka.kotex.TexArticle
             val texArticle = TexArticle {
                 preamble {
                     documentclass("article")
@@ -121,7 +121,7 @@ class TexArticleCompileTest : FreeSpec({
 
     "document in document should compile if 'this' is specified explicitly" {
         val code = """
-            import com.github.shwaka.kohomology.tex.TexArticle
+            import com.github.shwaka.kotex.TexArticle
             val texArticle = TexArticle {
                 preamble {
                     documentclass("article")
