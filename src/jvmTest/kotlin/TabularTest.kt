@@ -9,7 +9,7 @@ val tabularTag = NamedTag("Tabular")
 class TabularTest : FreeSpec({
     tags(scriptTag, tabularTag)
 
-    "test Tabular" {
+    "test simple Tabular" {
         val tabular = Tabular {
             addRow(listOf("a", "b"))
             addRow(listOf("c", "d"))
@@ -18,6 +18,23 @@ class TabularTest : FreeSpec({
             |\begin{tabular}{cc}
             |  a & b \\
             |  c & d \\
+            |\end{tabular}
+        """.trimMargin()
+    }
+
+    "test hline" {
+        val tabular = Tabular {
+            addRow(listOf("a", "b"))
+            hline()
+            addRow(listOf("c", "d"))
+            hline()
+        }
+        tabular.toString() shouldBe """
+            |\begin{tabular}{cc}
+            |  a & b \\
+            |  \hline
+            |  c & d \\
+            |  \hline
             |\end{tabular}
         """.trimMargin()
     }
