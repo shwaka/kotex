@@ -80,4 +80,23 @@ class TexDocumentTest : FreeSpec({
             |\end{tabular}
         """.trimMargin()
     }
+
+    "test tabular() with table" {
+        val texDocument = TexDocument {
+            begin("table", option = "ht") {
+                tabular {
+                    addRow(listOf("a", "b"))
+                    addRow(listOf("c", "d"))
+                }
+            }
+        }
+        texDocument.toString() shouldBe """
+            |\begin{table}[ht]
+            |  \begin{tabular}{cc}
+            |    a & b \\
+            |    c & d \\
+            |  \end{tabular}
+            |\end{table}
+        """.trimMargin()
+    }
 })
