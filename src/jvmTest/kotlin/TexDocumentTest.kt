@@ -65,4 +65,19 @@ class TexDocumentTest : FreeSpec({
         }
         texDocument.toString() shouldBe "\\subsection*{foo}"
     }
+
+    "test tabular()" {
+        val texDocument = TexDocument {
+            tabular {
+                addRow(listOf("a", "b"))
+                addRow(listOf("c", "d"))
+            }
+        }
+        texDocument.toString() shouldBe """
+            |\begin{tabular}{cc}
+            |  a & b \\
+            |  c & d \\
+            |\end{tabular}
+        """.trimMargin()
+    }
 })

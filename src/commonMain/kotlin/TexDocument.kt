@@ -17,6 +17,12 @@ public interface TexDocumentInterface<T : TexScriptInterface<T>> : TexScriptInte
         this.addLines("\\end{$name}")
     }
 
+    public fun tabular(
+        block: Tabular.() -> Unit
+    ) {
+        addScript(Tabular(block = block))
+    }
+
     public fun section(name: String) {
         this.simpleCommand("section", name)
     }
