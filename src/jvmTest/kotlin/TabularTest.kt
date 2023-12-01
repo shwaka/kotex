@@ -38,4 +38,17 @@ class TabularTest : FreeSpec({
             |\end{tabular}
         """.trimMargin()
     }
+
+    "test verticalLines" {
+        val tabular = Tabular(verticalLines = listOf(1, 2)) {
+            addRow(listOf("a", "b"))
+            addRow(listOf("c", "d"))
+        }
+        tabular.toString() shouldBe """
+            |\begin{tabular}{c|c|}
+            |  a & b \\
+            |  c & d \\
+            |\end{tabular}
+        """.trimMargin()
+    }
 })
