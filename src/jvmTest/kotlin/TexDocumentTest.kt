@@ -99,4 +99,19 @@ class TexDocumentTest : FreeSpec({
             |\end{table}
         """.trimMargin()
     }
+
+    "test tabular() with verticalLines" {
+        val texDocument = TexDocument {
+            tabular(verticalLines = listOf(0, 1)) {
+                addRow(listOf("a", "b"))
+                addRow(listOf("c", "d"))
+            }
+        }
+        texDocument.toString() shouldBe """
+            |\begin{tabular}{|c|c}
+            |  a & b \\
+            |  c & d \\
+            |\end{tabular}
+        """.trimMargin()
+    }
 })

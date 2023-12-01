@@ -18,9 +18,10 @@ public interface TexDocumentInterface<T : TexScriptInterface<T>> : TexScriptInte
     }
 
     public fun tabular(
+        verticalLines: List<Int> = emptyList(),
         block: Tabular.() -> Unit
     ) {
-        addScript(Tabular(block = block))
+        addScript(Tabular(verticalLines = verticalLines, block = block))
     }
 
     public fun section(name: String) {
