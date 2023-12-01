@@ -18,7 +18,7 @@ public interface TabularInterface<T : TexScriptInterface<T>> : TexScriptInterfac
 
 public class Tabular(
     linePrefix: String = "",
-    val verticalLines: List<Int> = emptyList(),
+    public val verticalLines: List<Int> = emptyList(),
 ) :
     ScriptBase<Tabular>(linePrefix),
     TabularInterface<Tabular> {
