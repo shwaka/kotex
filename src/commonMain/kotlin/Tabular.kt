@@ -16,7 +16,10 @@ public interface TabularInterface<T : TexScriptInterface<T>> : TexScriptInterfac
     }
 }
 
-public class Tabular(linePrefix: String = "") :
+public class Tabular(
+    linePrefix: String = "",
+    val verticalLines: List<Int> = emptyList(),
+) :
     ScriptBase<Tabular>(linePrefix),
     TabularInterface<Tabular> {
 
@@ -30,7 +33,7 @@ public class Tabular(linePrefix: String = "") :
         val texDocument = TexDocument {
             begin(
                 "tabular",
-                argument = "c".repeat(this@Tabular.colCount),
+                argument = Tabular.getPositionSpecification(this@Tabular.colCount, this@Tabular.verticalLines),
             ) {
                 addLines(super.toStringList())
             }
@@ -39,8 +42,32 @@ public class Tabular(linePrefix: String = "") :
     }
 
     public companion object {
-        public operator fun invoke(linePrefix: String = "", block: Tabular.() -> Unit): Tabular {
-            return Tabular(linePrefix).apply(block)
+        public operator fun invoke(
+            linePrefix: String = "",
+            verticalLines: List<Int> = emptyList(),
+            block: Tabular.() -> Unit,
+        ): Tabular {
+            return Tabular(linePrefix, verticalLines).apply(block)
+        }
+
+        private fun getPositionSpecification(colCount: Int, verticalLines: List<Int>): String {
+            require(
+                verticalLines.all { it <= colCount }
+            )
+            val specAsList = (0 until colCount).map { i ->
+                if (verticalLines.contains(i)) {
+                    "|c"
+                } else {
+                    "c"
+                }
+            } + listOf(
+                if (verticalLines.contains(colCount)) {
+                    "|"
+                } else {
+                    ""
+                }
+            )
+            return specAsList.joinToString("")
         }
     }
 }
